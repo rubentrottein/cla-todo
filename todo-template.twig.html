@@ -1,0 +1,89 @@
+{# templates/task/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}To-Do List{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">To-Do List</h1>
+            <a href="{{ path('app_task_new') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Nouvelle tâche
+            </a>
+        </div>
+
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% for task in tasks %}
+                <div class="flex items-center justify-between border-b py-4">
+                    <div class="flex items-center space-x-4">
+                        <form method="post" action="{{ path('app_task_toggle', {'id': task.id}) }}" class="inline">
+                            <button type="submit" class="text-gray-500 hover:text-gray-700">
+                                {% if task.isDone %}
+                                    <span class="text-green-500">✓</span>
+                                {% else %}
+                                    ○
+                                {% endif %}
+                            </button>
+                        </form>
+                        <div>
+                            <h3 class="font-semibold {% if task.isDone %}line-through text-gray-500{% endif %}">
+                                {{ task.title }}
+                            </h3>
+                            {% if task.description %}
+                                <p class="text-gray-600 text-sm">{{ task.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-500">
+                            {{ task.createdAt|date('d/m/Y') }}
+                        </span>
+                        <form method="post" action="{{ path('app_task_delete', {'id': task.id}) }}" 
+                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');" 
+                              class="inline">
+                            <button type="submit" class="text-red-500 hover:text-red-700">
+                                ×
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-gray-500 text-center py-4">Aucune tâche pour le moment</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{# templates/task/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle tâche{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h1 class="text-2xl font-bold mb-6">Nouvelle tâche</h1>
+
+            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+                <div>
+                    {{ form_label(form.title, null, {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                </div>
+
+                <div>
+                    {{ form_label(form.description, null, {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Créer
+                    </button>
+                    <a href="{{ path('app_task_index') }}" class="text-blue-500 hover:text-blue-800">
+                        Retour à la liste
+                    </a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
