@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages reçus{% endblock %}
+
+{% block body %}
+<div class="container mx-auto py-12">
+    <h2 class="text-3xl font-bold text-gray-800 dark:text-white text-center mb-6">Messages reçus</h2>
+
+    <div class="overflow-x-auto bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+        <table class="min-w-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
+            <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                <tr>
+                    <th class="py-3 px-4 text-left">Nom</th>
+                    <th class="py-3 px-4 text-left">Email</th>
+                    <th class="py-3 px-4 text-left">Message</th>
+                    <th class="py-3 px-4 text-left">Date</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-800 dark:text-gray-200">
+                {% for message in messages %}
+                    <tr class="border-t border-gray-300 dark:border-gray-600">
+                        <td class="py-3 px-4">{{ message.name }}</td>
+                        <td class="py-3 px-4">{{ message.email }}</td>
+                        <td class="py-3 px-4">{{ message.message }}</td>
+                        <td class="py-3 px-4">{{ message.createdAt|date('d/m/Y H:i') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-gray-500 dark:text-gray-400">Aucun message reçu.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
