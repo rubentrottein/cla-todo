@@ -1,0 +1,82 @@
+{# templates/registration/register.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block pageTitle %} Page d'inscription {% endblock %}
+{% block title %} Inscription {% endblock %}
+
+{% block body %}
+<div class="h-100 flex justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full my-24">
+        <div>
+            <h1 class="text-center text-3xl font-extrabold text-gray-900">
+                Créer un compte
+            </h1>
+        </div>
+        
+        {% if form_errors(registrationForm) %}
+            <div class="rounded-md bg-red-50 p-4 mb-4">
+                <div class="flex">
+                    <div class="text-sm text-red-700">
+                        {{ form_errors(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        {{ form_start(registrationForm, {'attr': {'class': 'mt-8 space-y-6'}}) }}
+            <div class="rounded-md bg-white p-5 shadow-sm -space-y-px">
+                <div class="mb-4">
+                    {{ form_label(registrationForm.email, 'Adresse email', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    <div class="mt-1">
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                    </div>
+                    {{ form_errors(registrationForm.email) }}
+                </div>
+                
+                <div class="mb-4">
+                    {{ form_label(registrationForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    <div class="mt-1">
+                        {{ form_widget(registrationForm.username, {'attr': {'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                    </div>
+                    {{ form_errors(registrationForm.username) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    <div class="mt-1">
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                    </div>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Votre mot de passe doit contenir au moins 6 caractères.
+                    </p>
+                    {{ form_errors(registrationForm.plainPassword) }}
+                </div>
+                
+                <div class="flex items-center mt-4">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'}}) }}
+                    <div class="ml-2">
+                        {{ form_label(registrationForm.agreeTerms, 'J\'accepte les conditions d\'utilisation', {'label_attr': {'class': 'text-sm text-gray-700'}}) }}
+                    </div>
+                </div>
+                {{ form_errors(registrationForm.agreeTerms) }}
+            </div>
+
+            <div class="mt-6">
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    S'inscrire
+                </button>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{{ path('app_login') }}" class="text-sm text-indigo-600 hover:text-indigo-500">
+                    Déjà un compte ? Connectez-vous
+                </a>
+            </div>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+{% endblock %}
